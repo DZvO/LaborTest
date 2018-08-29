@@ -79,6 +79,11 @@ namespace VRTK
         [Tooltip("If this is checked then the drop zone highlight section will be displayed in the scene editor window.")]
         public bool displayDropZoneInEditor = true;
 
+        //- change by Alexander Wiens (alexander.wiens@alumni.fh-aachen.de) -
+        [Tooltip("Enables/Disables actual snapping to this SnapDropZone (Highlighting etc. will continue to work though")]
+        public bool enableSnapping = true;
+        //-------------------------------------------------------------------
+
         [Tooltip("The Interactable Object to snap into the dropzone when the drop zone is enabled. The Interactable Object must be valid in any given policy list to snap.")]
         public VRTK_InteractableObject defaultSnappedInteractableObject;
 
@@ -684,6 +689,8 @@ namespace VRTK
 
         protected virtual void SnapObject(VRTK_InteractableObject interactableObjectCheck)
         {
+            if (!enableSnapping) return;
+
             //If the item is in a snappable position and this drop zone isn't snapped and the collider is a valid interactable object
             if (willSnap && !isSnapped && ValidSnapObject(interactableObjectCheck, false))
             {
