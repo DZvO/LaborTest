@@ -8,6 +8,7 @@
     {
         public VRTK_BaseControllable controllable;
         public Text displayText;
+        public CodeCursor crsr;
         public string outputOnMax = "Maximum Reached";
         public string outputOnMin = "Minimum Reached";
 
@@ -33,6 +34,7 @@
             {
                 Debug.Log(outputOnMax);
             }
+            crsr.StepForward();
         }
 
         protected virtual void MinLimitReached(object sender, ControllableEventArgs e)

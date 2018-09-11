@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using VRTK;
 
-//this checks if the cubes are put into the dropzones in the right order 
+//this is the global watch script that handles all business logic, for example this sets up the world and attaches the pointers to the blocks
+// TODO am anfang die blöcke schon in snapzones stecken (das array) bei welchem die cubes zurück snappen. swappen überlegen.        
 public class Watcherscript : MonoBehaviour {
     public GameObject[] cubes;
     public GameObject[] dropZones;
     public int currentCube = 0;
     public GameObject myDropzone = null;
+    public GameObject pointer_n = null;
+    public GameObject pointer_newn = null;
 
 	// Use this for initialization
 	void Start () {
@@ -22,7 +25,15 @@ public class Watcherscript : MonoBehaviour {
             //snapdropzone_unity_events.OnObjectSnappedToDropZone.AddListener(Checkerino);
             snapdropzone_unity_events.OnObjectSnappedToDropZone.AddListener(SnappedToDropZone);
         }
-	}
+
+        pointer_newn.transform.SetParent(cubes[0].transform);
+        //pointer_newn.transform.position = cubes[0].transform.position;
+        pointer_n.transform.SetParent(cubes[cubes.Length - 1].transform);
+        //pointer_n.transform.position = cubes[cubes.Length - 1].transform.position + (new Vector3(0.0f, 0.15f, 0.0f));
+
+        pointer_n.transform.localPosition = new Vector3(0.0f, 0.6f, 0.0f) + new Vector3(0.0f, cubes[cubes.Length - 1].transform.localScale.y, 0.0f) * 1;
+        pointer_newn.transform.localPosition = new Vector3(0.0f, 0.6f, 0.0f) + new Vector3(0.0f, cubes[0].transform.localScale.y, 0.0f) * 1;
+    }
 
     private void SnappedToDropZone(object arg0, SnapDropZoneEventArgs arg1)
     {
@@ -69,5 +80,11 @@ public class Watcherscript : MonoBehaviour {
 
     public void CubePut() {
         currentCube += 1;
+    }
+
+    //TODO instead of "N" should probably get an index so we can manage multiple pointers more easily
+    public void SetPointerN()
+    {
+
     }
 }
